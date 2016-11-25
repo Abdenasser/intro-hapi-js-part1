@@ -24,7 +24,18 @@ server.route( {
   handler: (request, reply) => {
     reply(`Hello ${encodeURIComponent(request.params.name)} !`);
   }
-})
+
+});
+
+server.route( {
+
+  method: ['POST', 'PUT'],
+  path: '/gotcha',
+  handler: (request, reply) => {
+    reply(`You sent me a ${encodeURIComponent(request.method)} method!`)
+  }
+
+});
 
 server.start(err => {
 
