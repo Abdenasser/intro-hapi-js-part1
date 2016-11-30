@@ -23,15 +23,15 @@ server.register(require('inert'), (err) => {
 
     });
 
-    server.route( {
-
-      method: 'GET',
-      path: '/{name}',
-      handler: (request, reply) => {
-        reply(`Hello ${encodeURIComponent(request.params.name)} !`);
-      }
-
-    });
+//    server.route( {
+//
+//      method: 'GET',
+//      path: '/{name}',
+//      handler: (request, reply) => {
+//        reply(`Hello ${encodeURIComponent(request.params.name)} !`);
+//      }
+//
+//    });
 
     server.route( {
 
@@ -45,9 +45,9 @@ server.register(require('inert'), (err) => {
 
     server.route({
         method: 'GET',
-        path: '/picture.jpg',
+        path: '/screenshot',
         handler: function (request, reply) {
-            reply.file('/path/to/picture.jpg');
+            reply.file('public/screenshot.png');
         }
     });
 
