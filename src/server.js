@@ -7,46 +7,56 @@ server.connection( {
   port: 8080
 });
 
-server.route( {
-
-  method: 'GET',
-  path: '/',
-  handler: (request, reply) => {
-    reply('Hello world!');
-  }
-
-});
-
-server.route( {
-
-  method: 'GET',
-  path: '/{name}',
-  handler: (request, reply) => {
-    reply(`Hello ${encodeURIComponent(request.params.name)} !`);
-  }
-
-});
-
-server.route( {
-
-  method: ['POST', 'PUT'],
-  path: '/gotcha',
-  handler: (request, reply) => {
-    reply(`You sent me a ${encodeURIComponent(request.method)} method!`)
-  }
-
-});
-
-server.start(err => {
+server.register(require('inert'), (err) => {
 
     if (err) {
-
-        // Fancy error handling here
-        console.error( 'Error was handled!' );
-        console.error( err );
-
+        throw err;
     }
 
-    console.log( `Server started at ${ server.info.uri }` );
+    server.route( {
 
+      method: 'GET',
+      path: '/',
+      handler: (request, reply) => {
+        reply('Hello world!');
+      }
+
+    });
+
+    server.route( {
+
+      method: 'GET',
+      path: '/{name}',
+      handler: (request, reply) => {
+        reply(`Hello ${encodeURIComponent(request.params.name)} !`);
+      }
+
+    });
+
+    server.route( {
+
+      method: ['POST', 'PUT'],
+      path: '/gotcha',
+      handler: (request, reply) => {
+        reply(`You sent me a ${encodeURIComponent(request.method)} method!`)
+      }
+
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/picture.jpg',
+        handler: function (request, reply) {
+            reply.file('/path/to/picture.jpg');
+        }
+    });
+
+    server.start((err) => {
+
+        if (err) {
+            throw err;
+        }
+
+        console.log('Server running at:', server.info.uri);
+    });
 });
